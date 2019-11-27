@@ -1,7 +1,7 @@
 using Test
-using Knowledge
+using KnowledgeLib
 
-tests = ["myobject_test.jl"]
+tests = ["parsing_test.jl"]
 
 for test in tests
   include(test)

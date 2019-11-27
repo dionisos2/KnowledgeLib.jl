@@ -1,23 +1,25 @@
+using AutoHashEquals
+
 abstract type Knowledge end
 abstract type Formula <: Knowledge end # Logical formula
 abstract type MetaKnowledge <: Knowledge end
 
-struct Literal <: Knowledge
+@auto_hash_equals struct Literal <: Knowledge
     value::String
 end
 
 # ¬X
-struct Negation <: Knowledge
+@auto_hash_equals struct Negation <: Knowledge
     value::Knowledge
 end
 
 # X+Y
-struct Conjunction <: Formula
+@auto_hash_equals struct Conjunction <: Formula
     terms::Set{Knowledge}
 end
 
 # X.Y
-struct Disjunction <: Formula
+@auto_hash_equals struct Disjunction <: Formula
     terms::Set{Knowledge}
 end
 
@@ -25,13 +27,13 @@ Conjunction(vect::Vector{T}) where T<:Knowledge = Conjunction(Set{Knowledge}(vec
 Disjunction(vect::Vector{T}) where T<:Knowledge = Disjunction(Set{Knowledge}(vect))
 
 # A:X
-struct KnowledgeOfOther <: MetaKnowledge
+@auto_hash_equals struct KnowledgeOfOther <: MetaKnowledge
     agent::Agent
     value::Knowledge
 end
 
 # R(A,B):X
-struct MutuallyReflexiveKnowledge <: MetaKnowledge
+@auto_hash_equals struct MutuallyReflexiveKnowledge <: MetaKnowledge
     agents::Set{Agent}
     value::Knowledge
 end
@@ -57,8 +59,8 @@ function show_formula(io::IO, formula::Formula, op::String)
     print(io, "$(terms[end]))")
 end
 
-Base.show(io::IO, formula::Disjunction) = show_formula(io, formula, " . ")
-Base.show(io::IO, formula::Conjunction) = show_formula(io, formula, " + ")
+Base.show(io::IO, formula::Disjunction) = show_formula(io, formula, " + ")
+Base.show(io::IO, formula::Conjunction) = show_formula(io, formula, " . ")
 
 Base.show(io::IO, kl::KnowledgeOfOther) = print(io, "$(kl.agent):$(kl.value)")
 

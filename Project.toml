@@ -4,6 +4,7 @@ authors = ["dionisos <denis.baudouin@gmail.com>"]
 version = "0.1.0"
 
 [deps]
+AutoHashEquals = "15f4f7f2-30c1-5605-9d31-71845cf9641f"
 Lazy = "50d2b5c4-7a5e-59d5-8109-a42b560f39c0"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 Utils = "f82b7c1c-4f13-11e9-054f-f56080832a5c"
