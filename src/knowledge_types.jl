@@ -13,6 +13,9 @@ end
     value::Knowledge
 end
 
+const Negation(value::Negation) = value.value
+
+
 # X+Y
 @auto_hash_equals struct Conjunction <: Formula
     terms::Set{Knowledge}
@@ -25,6 +28,15 @@ end
 
 Conjunction(vect::Vector{T}) where T<:Knowledge = Conjunction(Set{Knowledge}(vect))
 Disjunction(vect::Vector{T}) where T<:Knowledge = Disjunction(Set{Knowledge}(vect))
+
+compl(::Type{Conjunction}) = Disjunction
+compl(::Type{Disjunction}) = Conjunction
+
+# De Morgan's laws
+function Negation(value::T) where T <: Formula
+    new_terms = [Negation(term) for term in value.terms]
+    return compl(T)(new_terms)
+end
 
 # A:X
 @auto_hash_equals struct KnowledgeOfOther <: MetaKnowledge

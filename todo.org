@@ -1,6 +1,6 @@
 * DONE use "!" for negation
-* TODO [recursively] formula at construction
-* TODO distribute Negation at construction
+* DONE [recursively] formula at construction
+* DONE distribute Negation at construction
 * TODO True and False constants
 * TODO merge knowledge with *
 * TODO find the correct interface for deduction
