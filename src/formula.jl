@@ -83,5 +83,7 @@ function show_formula(io::IO, formula::Formula, op::String)
     print(io, "$(terms[end]))")
 end
 
+Base.:*(kl1::T1, kl2::T2) where T1<:Knowledge where T2<:Knowledge = Conjunction([kl1, kl2])
+
 Base.show(io::IO, formula::Disjunction) = show_formula(io, formula, " + ")
 Base.show(io::IO, formula::Conjunction) = show_formula(io, formula, " . ")

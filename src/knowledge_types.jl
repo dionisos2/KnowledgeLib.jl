@@ -15,5 +15,3 @@ Base.isless(x::Knowledge, y::Knowledge) = hash(x) < hash(y) # Only here to alway
 
 Base.show(io::IO, kl::Literal) = print(io, kl.value)
 
-
-

@@ -63,4 +63,16 @@ using KnowledgeLib
         @test Conjunction([kl_true, Disjunction([lb, nlb])]) == kl_true
         @test Disjunction([kl_false, Conjunction([lb, nlb])]) == kl_false
     end
+
+    @testset "concatenate knowledge" begin
+        la, lb, lc = Literal("a"), Literal("b"), Literal("c")
+        kA = KnowledgeOfOther(Agent("A"), lc)
+        c1 = Conjunction([la, lb])
+        c2 = Conjunction([lb, lc])
+
+        @test c1 * c2 == Conjunction([la, lb, lc])
+        @test kA * la == Conjunction([kA, la])
+        @test kA * c1 == Conjunction([kA, la, lb])
+        @test kA * la * lb * lc * c1 == Conjunction([kA, la, lb, lc])
+    end
 end
