@@ -3,7 +3,7 @@
 * DONE distribute Negation at construction
 * DONE kl_true and kl_false constants
 * DONE externalise formulas
-* TODO check for x $ !x
+* DONE check for x $ !x
 * TODO merge knowledge with *
 * TODO find the correct interface for deduction
 * TODO create all deductions functors

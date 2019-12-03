@@ -39,10 +39,6 @@ const Negation(value::Negation) = value.value
     terms::Set{Knowledge}
 
     function Conjunction(terms::Set{T}) where T<:Knowledge
-        if length(terms) == 1
-            return first(terms)
-        end
-
         if any(term == kl_false for term in terms)
             return kl_false
         end
@@ -52,12 +48,25 @@ const Negation(value::Negation) = value.value
         for term in terms
             if isa(term, Conjunction)
                 union!(external_terms, term.terms)
-            else
+            elseif term != kl_true
                 union!(external_terms, [term])
             end
         end
+        terms = external_terms
 
-        return new(Set([term for term in external_terms if term != kl_true]))
+        if length(terms) == 1
+            return first(terms)
+        elseif length(terms) == 0
+            return kl_true
+        end
+
+        for term in terms
+            if Negation(term)∈terms
+                return kl_false
+            end
+        end
+
+        return new(terms)
     end
 end
 
@@ -66,10 +75,6 @@ end
     terms::Set{Knowledge}
 
     function Disjunction(terms::Set{T}) where T<:Knowledge
-        if length(terms) == 1
-            return first(terms)
-        end
-
         if any(term == kl_true for term in terms)
             return kl_true
         end
@@ -79,12 +84,25 @@ end
         for term in terms
             if isa(term, Disjunction)
                 union!(external_terms, term.terms)
-            else
+            elseif term != kl_false
                 union!(external_terms, [term])
             end
         end
+        terms = external_terms
 
-        return new(Set([term for term in external_terms if term != kl_false]))
+        if length(terms) == 1
+            return first(terms)
+        elseif length(terms) == 0
+            return kl_false
+        end
+
+        for term in terms
+            if Negation(term)∈terms
+                return kl_true
+            end
+        end
+
+        return new(terms)
     end
 end
 

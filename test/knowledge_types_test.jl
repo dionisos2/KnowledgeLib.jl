@@ -49,4 +49,18 @@ using KnowledgeLib
         @test Conjunction([la, Conjunction([lb, lc])]) == Conjunction([la, lb, lc])
         @test Disjunction([la, Disjunction([lb, lc])]) == Disjunction([la, lb, lc])
     end
+
+    @testset "check for x . !x and x + !x" begin
+        la, lb, lc = Literal("a"), Literal("b"), Literal("c")
+        nla, nlb, nlc = Negation(la), Negation(lb), Negation(lc)
+
+        @test Conjunction([la, lb, nla, lc]) == kl_false
+        @test Disjunction([la, lb, nla, lc]) == kl_true
+
+        @test Conjunction([la, Disjunction([lb, nlb])]) == la
+        @test Disjunction([la, Conjunction([lb, nlb])]) == la
+
+        @test Conjunction([kl_true, Disjunction([lb, nlb])]) == kl_true
+        @test Disjunction([kl_false, Conjunction([lb, nlb])]) == kl_false
+    end
 end
