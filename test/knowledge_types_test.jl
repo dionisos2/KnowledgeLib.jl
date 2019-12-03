@@ -40,4 +40,13 @@ using KnowledgeLib
         @test MutuallyReflexiveKnowledge([agent], kl_true) == kl_true
         @test MutuallyReflexiveKnowledge([agent], kl_false) == kl_false
     end
+
+    @testset "externalise formulas" begin
+        la, lb, lc = Literal("a"), Literal("b"), Literal("c")
+
+        @test Conjunction([la]) == la
+        @test Disjunction([la]) == la
+        @test Conjunction([la, Conjunction([lb, lc])]) == Conjunction([la, lb, lc])
+        @test Disjunction([la, Disjunction([lb, lc])]) == Disjunction([la, lb, lc])
+    end
 end

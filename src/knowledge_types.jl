@@ -39,11 +39,25 @@ const Negation(value::Negation) = value.value
     terms::Set{Knowledge}
 
     function Conjunction(terms::Set{T}) where T<:Knowledge
+        if length(terms) == 1
+            return first(terms)
+        end
+
         if any(term == kl_false for term in terms)
             return kl_false
         end
 
-        return new(Set([term for term in terms if term != kl_true]))
+        external_terms = Set{Knowledge}()
+
+        for term in terms
+            if isa(term, Conjunction)
+                union!(external_terms, term.terms)
+            else
+                union!(external_terms, [term])
+            end
+        end
+
+        return new(Set([term for term in external_terms if term != kl_true]))
     end
 end
 
@@ -52,11 +66,25 @@ end
     terms::Set{Knowledge}
 
     function Disjunction(terms::Set{T}) where T<:Knowledge
+        if length(terms) == 1
+            return first(terms)
+        end
+
         if any(term == kl_true for term in terms)
             return kl_true
         end
 
-        return new(Set([term for term in terms if term != kl_false]))
+        external_terms = Set{Knowledge}()
+
+        for term in terms
+            if isa(term, Disjunction)
+                union!(external_terms, term.terms)
+            else
+                union!(external_terms, [term])
+            end
+        end
+
+        return new(Set([term for term in external_terms if term != kl_false]))
     end
 end
 
