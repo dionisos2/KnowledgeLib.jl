@@ -8,22 +8,56 @@ abstract type MetaKnowledge <: Knowledge end
     value::String
 end
 
+const kl_true = Literal("1")
+const kl_false = Literal("0")
+
 # !X
 @auto_hash_equals struct Negation <: Knowledge
     value::Knowledge
+
+    function Negation(value::Literal)
+        if value == kl_true
+            return kl_false
+        elseif value == kl_false
+            return kl_true
+        else
+            return new(value)
+        end
+    end
+
+    function Negation(value::Knowledge)
+        new(value)
+    end
 end
 
 const Negation(value::Negation) = value.value
 
 
+
 # X+Y
 @auto_hash_equals struct Conjunction <: Formula
     terms::Set{Knowledge}
+
+    function Conjunction(terms::Set{T}) where T<:Knowledge
+        if any(term == kl_false for term in terms)
+            return kl_false
+        end
+
+        return new(Set([term for term in terms if term != kl_true]))
+    end
 end
 
 # X.Y
 @auto_hash_equals struct Disjunction <: Formula
     terms::Set{Knowledge}
+
+    function Disjunction(terms::Set{T}) where T<:Knowledge
+        if any(term == kl_true for term in terms)
+            return kl_true
+        end
+
+        return new(Set([term for term in terms if term != kl_false]))
+    end
 end
 
 Conjunction(vect::Vector{T}) where T<:Knowledge = Conjunction(Set{Knowledge}(vect))
@@ -31,6 +65,7 @@ Disjunction(vect::Vector{T}) where T<:Knowledge = Disjunction(Set{Knowledge}(vec
 
 compl(::Type{Conjunction}) = Disjunction
 compl(::Type{Disjunction}) = Conjunction
+
 
 # De Morgan's laws
 function Negation(value::T) where T <: Formula
@@ -42,12 +77,32 @@ end
 @auto_hash_equals struct KnowledgeOfOther <: MetaKnowledge
     agent::Agent
     value::Knowledge
+
+    function KnowledgeOfOther(agent::Agent, value::T) where T<:Knowledge
+        if value == kl_true
+            return kl_true
+        elseif value == kl_false
+            return kl_false
+        else
+            return new(agent, value)
+        end
+    end
 end
 
 # R(A,B):X
 @auto_hash_equals struct MutuallyReflexiveKnowledge <: MetaKnowledge
     agents::Set{Agent}
     value::Knowledge
+
+    function MutuallyReflexiveKnowledge(agents::Set{Agent}, value::T) where T<:Knowledge
+        if value == kl_true
+            return kl_true
+        elseif value == kl_false
+            return kl_false
+        else
+            return new(agents, value)
+        end
+    end
 end
 
 MutuallyReflexiveKnowledge(agents::Vector{Agent}, value::Knowledge) = MutuallyReflexiveKnowledge(Set(agents), value::Knowledge)
@@ -85,4 +140,5 @@ function Base.show(io::IO, kl::MutuallyReflexiveKnowledge)
     end
     print(io, "$(agents[end])]:$(kl.value)")
 end
+
 

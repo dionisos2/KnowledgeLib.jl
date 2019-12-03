@@ -19,4 +19,25 @@ using KnowledgeLib
         @test isa(Negation(Conjunction([la, lb, lc])), Disjunction)
         @test isa(Negation(Disjunction([la, lb, lc])), Conjunction)
     end
+
+    @testset "kl_true and kl_false" begin
+        la, lb, lc = Literal("a"), Literal("b"), Literal("c")
+        agent = Agent("A")
+
+        @test Literal("0") == kl_false
+        @test Literal("1") == kl_true
+        @test Negation(kl_false) == kl_true
+        @test Negation(kl_true) == kl_false
+
+        @test Conjunction([la, lb, lc, kl_true]) == Conjunction([la, lb, lc])
+        @test Conjunction([la, lb, lc, kl_false]) == kl_false
+        @test Disjunction([la, lb, lc, kl_false]) == Disjunction([la, lb, lc])
+        @test Disjunction([la, lb, lc, kl_true]) == kl_true
+
+        @test KnowledgeOfOther(agent, kl_true) == kl_true
+        @test KnowledgeOfOther(agent, kl_false) == kl_false
+
+        @test MutuallyReflexiveKnowledge([agent], kl_true) == kl_true
+        @test MutuallyReflexiveKnowledge([agent], kl_false) == kl_false
+    end
 end

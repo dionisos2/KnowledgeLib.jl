@@ -8,6 +8,7 @@ include("parsing.jl")
 export Agent
 export Knowledge, Formula, MetaKnowledge
 export Literal, Negation, Conjunction, Disjunction, MutuallyReflexiveKnowledge, KnowledgeOfOther, compl
+export kl_true, kl_false
 export Deduction, Derivate, Merge
 export derivate, merge, develop
 export @kl_str

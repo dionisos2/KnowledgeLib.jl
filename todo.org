@@ -1,7 +1,9 @@
 * DONE use "!" for negation
 * DONE [recursively] formula at construction
 * DONE distribute Negation at construction
-* TODO True and False constants
+* DONE kl_true and kl_false constants
+* TODO externalise formulas
+* TODO check for x $ !x
 * TODO merge knowledge with *
 * TODO find the correct interface for deduction
 * TODO create all deductions functors
