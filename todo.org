@@ -4,6 +4,7 @@
 * DONE kl_true and kl_false constants
 * DONE externalise formulas
 * DONE check for x $ !x
+* DONE refactorize
 * TODO merge knowledge with *
 * TODO find the correct interface for deduction
 * TODO create all deductions functors
