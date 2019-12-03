@@ -1,8 +1,10 @@
 using KnowledgeLib
 
-get_agent = KnowledgeLib.get_agent
-decompose_knowledge_of_other = KnowledgeLib.decompose_knowledge_of_other
-decompose_mutually_reflexive_knowledge = KnowledgeLib.decompose_mutually_reflexive_knowledge
+const get_agent = KnowledgeLib.get_agent
+const decompose_knowledge_of_other = KnowledgeLib.decompose_knowledge_of_other
+const decompose_mutually_reflexive_knowledge = KnowledgeLib.decompose_mutually_reflexive_knowledge
+const decompose_formula = KnowledgeLib.decompose_formula
+const str_to_knowledge = KnowledgeLib.str_to_knowledge
 
 @testset "parsing" begin
     @testset "decompose_formula" begin
@@ -48,7 +50,7 @@ decompose_mutually_reflexive_knowledge = KnowledgeLib.decompose_mutually_reflexi
 
     @testset "str_to_knowledge" begin
         @testset "str_to_knowledge convert valid Conjunction" begin
-            kl = str_to_knowledge("(¬a . (a+b) . A:plop . [A, B^1]:¬plop . (b+(¬b.¬c)))")
+            kl = str_to_knowledge("(!a . (a+b) . A:plop . [A, B^1]:!plop . (b+(!b.!c)))")
             @test isa(kl, Conjunction)
             @test length(kl.terms) == 5
 

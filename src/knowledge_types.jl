@@ -8,7 +8,7 @@ abstract type MetaKnowledge <: Knowledge end
     value::String
 end
 
-# ¬X
+# !X
 @auto_hash_equals struct Negation <: Knowledge
     value::Knowledge
 end
@@ -40,13 +40,12 @@ end
 
 MutuallyReflexiveKnowledge(agents::Vector{Agent}, value::Knowledge) = MutuallyReflexiveKnowledge(Set(agents), value::Knowledge)
 
-create_root() = Disjunction([Literal("1")])
 
 Base.isless(x::Knowledge, y::Knowledge) = hash(x) < hash(y) # Only here to always keep the same order
 
 
 Base.show(io::IO, kl::Literal) = print(io, kl.value)
-Base.show(io::IO, kl::Negation) = print(io, "¬$(kl.value)")
+Base.show(io::IO, kl::Negation) = print(io, "!$(kl.value)")
 
 
 function show_formula(io::IO, formula::Formula, op::String)

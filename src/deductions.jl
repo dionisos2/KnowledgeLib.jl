@@ -6,8 +6,20 @@ struct Derivate <: Deduction end
 # A:X . A:Y → A:X . A:Y . A:(X.Y)
 struct Merge <: Deduction end
 
-function (d::Derivate)(knowledge::MetaKnowledge)
-    return knowledge.value
+struct Develop <: Deduction end
+
+function (d::Develop)(kl_base::Knowledge, kl_target::MetaKnowledge)
+    check_validity(kl_base, kl_target)
+
+
+    return false
+end
+
+function (d::Derivate)(kl_base::Knowledge, kl_target::MetaKnowledge)
+    check_validity(kl_base, kl_target)
+
+
+    return false
 end
 
 function (m::Merge)(AX::KnowledgeOfOther, AY::KnowledgeOfOther)
@@ -22,3 +34,4 @@ end
 
 const derivate = Derivate()
 const merge = Merge()
+const develop = Develop()

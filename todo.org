@@ -1,0 +1,12 @@
+* DONE use "!" for negation
+* TODO [recursively] formula at construction
+* TODO distribute Negation at construction
+* TODO True and False constants
+* TODO merge knowledge with *
+* TODO find the correct interface for deduction
+* TODO create all deductions functors
+* TODO test for small demonstration
+* TODO create Demonstration type
+* TODO is_possible and is_necessary function
+* TODO first draft for thinking function
+

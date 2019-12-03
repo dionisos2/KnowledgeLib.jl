@@ -2,7 +2,7 @@ function str_to_knowledge(str::AbstractString)
     str = replace(str, " "=>"")
 
     if is_negation(str)
-        return Negation(str_to_knowledge(str[3:end])) # ¬ is two caracteres in one
+        return Negation(str_to_knowledge(str[2:end]))
     elseif is_literal(str)
         return Literal(str)
     elseif is_formula(str)
@@ -22,10 +22,10 @@ end
 
 Base.parse(::Type{Knowledge}, str::AbstractString) = str_to_knowledge(str)
 
-const r_literal = "[^ +.:¬\\[\\]\\(\\)]*"
+const r_literal = "[^ +.:!\\[\\]\\(\\)]*"
 const r_agent = "$r_literal(?:^[0-9]+)?"
 
-is_negation(str) = (str[1] == '¬')
+is_negation(str) = (str[1] == '!')
 is_literal(str) = occursin(Regex("^$r_literal\$"), str)
 is_formula(str) = (str[1] == '(')
 is_knowledge_of_other(str) = occursin(Regex("^$r_literal:"), str)

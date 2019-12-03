@@ -1,4 +1,4 @@
-# Knowledge
+# KnowledgeLib
 A package to manipulation knowledge of knowledge through a particular formal logic
 
 ## How to use
@@ -7,7 +7,7 @@ using KnowledgeLib
 
 x_and_y = kl"(x . y)"
 x_or_y = kl"(x + y)"
-not_x = kl"¬x" # ¬ = \neg<tab> in julia repl
+not_x = kl"!x"
 
 albert_know_x = kl"albert:x"
 
@@ -18,6 +18,6 @@ albert_and_bernard_have_common_knowledge_about_x = kl"[albert, bernard]:x"
 # albert == albert^0
 albert_know_x_then_know_y_then_know_z = kl"(albert:x . albert^1:y . albert^2:z)"
 
-random_complex_stuff = kl"(([albert,bernard]:celine:(x+y)) . (albert^1:¬bernard:x + ¬y))"
+random_complex_stuff = kl"(([albert,bernard]:celine:(x+y)) . (albert^1:!bernard:x + !y))"
 
 ```

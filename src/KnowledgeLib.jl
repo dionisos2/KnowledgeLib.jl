@@ -7,10 +7,10 @@ include("parsing.jl")
 
 export Agent
 export Knowledge, Formula, MetaKnowledge
-export Literal, Negation, Conjunction, Disjunction, MutuallyReflexiveKnowledge, KnowledgeOfOther, create_root
+export Literal, Negation, Conjunction, Disjunction, MutuallyReflexiveKnowledge, KnowledgeOfOther
 export Deduction, Derivate, Merge
-export derivate, merge
-export @kl_str, str_to_knowledge, decompose_formula
+export derivate, merge, develop
+export @kl_str
 
 
 end # module
