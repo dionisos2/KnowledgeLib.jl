@@ -1,5 +1,5 @@
 # KnowledgeLib
-A package to manipulation knowledge of knowledge through a particular formal logic
+A package to manipulate a particular formal logic used to represent knowledge of knowledge.
 
 ## How to use
 ```julia
